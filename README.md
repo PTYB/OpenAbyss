@@ -11,6 +11,7 @@ Open source script for Powbot that crafts runes through the abyss
   - Cosmic
   - Earth
   - Fire
+  - Law
   - Nature
 - Energy restoration supported
   - Energy potions
