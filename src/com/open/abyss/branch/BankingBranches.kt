@@ -12,8 +12,8 @@ import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
 
 class NeedsEnergyRecover(script: Script) : Branch<Script>(script, "Checking essense") {
-    override val successComponent: TreeComponent<Script> = WithdrawRecoveryItems(script)
-    override val failedComponent: TreeComponent<Script> = NeedsToWithdrawRunes(script)
+    override val successComponent: TreeComponent<Script> = ShouldWithdrawRecoveryItems(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawRunes(script)
 
     override fun validate(): Boolean {
         return Combat.healthPercent() < script.configuration.healthRestorePercent ||
@@ -22,8 +22,8 @@ class NeedsEnergyRecover(script: Script) : Branch<Script>(script, "Checking esse
 }
 
 class NeedsToFillPouches(script: Script) : Branch<Script>(script, "Needs to fill pouches") {
-    override val successComponent: TreeComponent<Script> = FillPouches(script)
-    override val failedComponent: TreeComponent<Script> = FinishBanking(script)
+    override val successComponent: TreeComponent<Script> = ShouldFillPouches(script)
+    override val failedComponent: TreeComponent<Script> = ShouldCloseBank(script)
 
     override fun validate(): Boolean {
         // Force it to update pouches since bank is open
@@ -33,7 +33,7 @@ class NeedsToFillPouches(script: Script) : Branch<Script>(script, "Needs to fill
     }
 }
 
-class FillPouches(script: Script) : Branch<Script>(script, "Fill all pouches") {
+class ShouldFillPouches(script: Script) : Branch<Script>(script, "Fill all pouches") {
     override val successComponent: TreeComponent<Script> = FillAllPouches(script)
     override val failedComponent: TreeComponent<Script> = WithdrawEssence(script)
 
@@ -42,7 +42,7 @@ class FillPouches(script: Script) : Branch<Script>(script, "Fill all pouches") {
     }
 }
 
-class FinishBanking(script: Script) : Branch<Script>(script, "Fill all pouches") {
+class ShouldCloseBank(script: Script) : Branch<Script>(script, "Fill all pouches") {
     override val successComponent: TreeComponent<Script> = CloseBank(script)
     override val failedComponent: TreeComponent<Script> = WithdrawEssence(script)
 
@@ -51,7 +51,7 @@ class FinishBanking(script: Script) : Branch<Script>(script, "Fill all pouches")
     }
 }
 
-class WithdrawRecoveryItems(script: Script) : Branch<Script>(script, "Withdraw supplies") {
+class ShouldWithdrawRecoveryItems(script: Script) : Branch<Script>(script, "Withdraw supplies") {
     override val successComponent: TreeComponent<Script> = ConsumeSupplies(script)
     override val failedComponent: TreeComponent<Script> = WithdrawSupplies(script)
 
@@ -64,7 +64,7 @@ class WithdrawRecoveryItems(script: Script) : Branch<Script>(script, "Withdraw s
     }
 }
 
-class NeedsToWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw runes") {
+class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw runes") {
     override val successComponent: TreeComponent<Script> = WithdrawRunes(script)
     override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
 
@@ -87,7 +87,7 @@ class ShouldRunecraft(script: Script) : Branch<Script>(script, "Checking essense
 }
 
 class InAltar(script: Script) : Branch<Script>(script, "In altar") {
-    override val successComponent: TreeComponent<Script> = Teleport(script)
+    override val successComponent: TreeComponent<Script> = ShouldChronicleTeleport(script)
     override val failedComponent: TreeComponent<Script> = InHouse(script)
 
     override fun validate(): Boolean {
@@ -104,16 +104,16 @@ class InHouse(script: Script) : Branch<Script>(script, "In house") {
     }
 }
 
-class Teleport(script: Script) : Branch<Script>(script, "Which teleport") {
+class ShouldChronicleTeleport(script: Script) : Branch<Script>(script, "Which teleport") {
     override val successComponent: TreeComponent<Script> = ChronicleTeleport(script)
-    override val failedComponent: TreeComponent<Script> = HouseTeleport(script)
+    override val failedComponent: TreeComponent<Script> = ShouldRuneTeleport(script)
 
     override fun validate(): Boolean {
         return script.configuration.teleport == RunecraftingMethod.Chronicle
     }
 }
 
-class HouseTeleport(script: Script) : Branch<Script>(script, "House teleport runes") {
+class ShouldRuneTeleport(script: Script) : Branch<Script>(script, "House teleport runes") {
     override val successComponent: TreeComponent<Script> = HouseTeleportRunes(script)
     override val failedComponent: TreeComponent<Script> = HouseTeleportTablet(script)
 

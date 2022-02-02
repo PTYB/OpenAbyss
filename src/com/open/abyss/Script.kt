@@ -1,8 +1,7 @@
 package com.open.abyss
 
 import com.google.common.eventbus.Subscribe
-import com.open.abyss.Constants.AREA_COSMIC_ALTAR
-import com.open.abyss.branch.ShouldBank
+import com.open.abyss.branch.IsBankOpened
 import com.open.abyss.com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
 import com.open.abyss.models.RuneType
@@ -65,7 +64,7 @@ import java.util.*
 class Script : TreeScript() {
 
     override val rootComponent: TreeComponent<*> by lazy {
-        ShouldBank(this)
+        IsBankOpened(this)
     }
 
     lateinit var configuration: Configuration

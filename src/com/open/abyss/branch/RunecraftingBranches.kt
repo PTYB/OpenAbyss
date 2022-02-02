@@ -10,7 +10,7 @@ import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
 
 class InAltarWithEssense(script: Script) : Branch<Script>(script, "In altar with essense") {
-    override val successComponent: TreeComponent<Script> = CraftRunes(script)
+    override val successComponent: TreeComponent<Script> = ShouldCraftRunes(script)
     override val failedComponent: TreeComponent<Script> = InAbyss(script)
 
     override fun validate(): Boolean {
@@ -18,7 +18,8 @@ class InAltarWithEssense(script: Script) : Branch<Script>(script, "In altar with
     }
 }
 
-class CraftRunes(script: Script) : Branch<Script>(script, "Has essense in inventory") {
+class
+ShouldCraftRunes(script: Script) : Branch<Script>(script, "Has essense in inventory") {
     override val successComponent: TreeComponent<Script> = CraftAtAltar(script)
     override val failedComponent: TreeComponent<Script> = EmptyPouches(script)
 
@@ -46,7 +47,7 @@ class PassedDitch(script: Script) : Branch<Script>(script, "Past ditch") {
 }
 
 class InInnerAbyssRing(script: Script) : Branch<Script>(script, "In abyss") {
-    override val successComponent: TreeComponent<Script> = NeedsToRepairPouch(script)
+    override val successComponent: TreeComponent<Script> = ShouldRepairPouch(script)
     override val failedComponent: TreeComponent<Script> = EnterAbyssInner(script)
 
     override fun validate(): Boolean {
@@ -54,7 +55,7 @@ class InInnerAbyssRing(script: Script) : Branch<Script>(script, "In abyss") {
     }
 }
 
-class NeedsToRepairPouch(script: Script) : Branch<Script>(script, "Needs to repair pouch") {
+class ShouldRepairPouch(script: Script) : Branch<Script>(script, "Needs to repair pouch") {
     override val successComponent: TreeComponent<Script> = RepairPouch(script)
     override val failedComponent: TreeComponent<Script> = EnterRift(script)
 

@@ -8,7 +8,7 @@ import org.powbot.api.script.tree.TreeComponent
 /**
  *  The root node which is excuted by the script
  */
-class ShouldBank(script: Script) : Branch<Script>(script, "Bank open") {
+class IsBankOpened(script: Script) : Branch<Script>(script, "Bank open") {
     override val successComponent: TreeComponent<Script> = NeedsEnergyRecover(script)
     override val failedComponent: TreeComponent<Script> = ShouldRunecraft(script)
 
