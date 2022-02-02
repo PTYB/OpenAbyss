@@ -16,7 +16,8 @@ class CrossDitch(script: Script) : Leaf<Script>(script, "Crossing ditch") {
 
     override fun execute() {
 
-        val ditch = Objects.nearestGameObject("Wilderness ditch")
+        val ditch = Objects.stream(ditchTile, 6, GameObject.Type.INTERACTIVE).name("Wilderness ditch")
+            .shuffled().first()
 
         if (ditch == GameObject.Nil) {
             Movement.builder(ditchTile)

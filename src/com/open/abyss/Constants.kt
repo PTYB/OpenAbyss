@@ -27,6 +27,7 @@ object Constants {
     val AREA_EARTH_ALTAR = Area(Tile(2626, 4859), Tile(2685, 4815))
     val AREA_FIRE_ALTAR = Area(Tile(2556, 4863), Tile(2618, 4807))
     val AREA_NATURE_ALTAR = Area(Tile(2387, 4854), Tile(2412, 4828))
+    val AREA_LAW_ALTAR = Area(Tile(2441, 4856), Tile(2486, 4811))
 
     val BANK_VARROCK_WEST_SOUTH_SIDE = Tile(3185, 3436)
     val BANK_EDGEVILLE = Tile(3094, 3490)

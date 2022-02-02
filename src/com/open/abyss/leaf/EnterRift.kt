@@ -3,6 +3,7 @@ package com.open.abyss.leaf
 import com.open.abyss.Script
 import com.open.abyss.extensions.nearestGameObject
 import org.powbot.api.Condition
+import org.powbot.api.rt4.GameObject
 import org.powbot.api.rt4.Movement
 import org.powbot.api.rt4.Objects
 import org.powbot.api.rt4.Players
@@ -12,9 +13,9 @@ class EnterRift(script: Script) : Leaf<Script>(script, "Enter rift") {
     override fun execute() {
         val rift = Objects.nearestGameObject("${script.configuration.runeType} rift")
 
-        if (!rift.inViewport()) {
+        if (shouldWalkTo(rift)) {
             Movement.builder(rift.tile())
-                .setWalkUntil { rift.inViewport() }
+                .setWalkUntil { !shouldWalkTo(rift) }
                 .setRunMin(8)
                 .setRunMax(20)
                 .move()
@@ -23,5 +24,9 @@ class EnterRift(script: Script) : Leaf<Script>(script, "Enter rift") {
         if (rift.inViewport() && rift.interact("Exit-through")) {
             Condition.wait({ script.configuration.alterArea.contains(Players.local()) }, 1000, 10)
         }
+    }
+
+    private fun shouldWalkTo(rift: GameObject) : Boolean{
+        return rift.tile.distance() > 10 || !rift.inViewport(true)
     }
 }

@@ -29,8 +29,10 @@ import java.util.*
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.0",
+    version = "1.0.1",
     category = ScriptCategory.Runecrafting,
+    author = "PTY",
+    markdownFileName = "OpenAbyss.md"
 )
 @ScriptConfiguration.List(
     [
@@ -39,7 +41,7 @@ import java.util.*
             description = "Type of rune you wish to craft.",
             optionType = OptionType.STRING,
             defaultValue = "Air",
-            allowedValues = arrayOf("Air", "Cosmic", "Earth", "Fire", "Nature")
+            allowedValues = arrayOf("Air", "Cosmic", "Earth", "Fire", "Law", "Nature")
         ),
         ScriptConfiguration(
             name = "Method",
@@ -81,6 +83,9 @@ class Script : TreeScript() {
         }
     }
 
+    /**
+     *  This method extracts the configuration from the GUI which is presented via the class annotations.
+     */
     private fun extractConfiguration() {
         val runeType = RuneType.valueOf(getOption<String>("Rune")!!)
         val method = RunecraftingMethod.valueOf(getOption<String>("Method")!!)
@@ -92,22 +97,33 @@ class Script : TreeScript() {
             ScriptManager.stop()
             return
         }
-        configuration = Configuration(runeType.altarArea, runeType.toString(), method, restoreEnergy, food)
+
+        configuration = Configuration(runeType.altarArea, runeType, method, restoreEnergy, food)
     }
 
     private fun addPaint() {
         val p: Paint = PaintBuilder.newBuilder()
             .addString("Last leaf:") { lastLeaf.name }
             .trackSkill(Skill.Runecrafting)
-            .trackInventoryItems()
+            .trackInventoryItems(configuration.runeType.runeId)
             .y(45)
             .x(40)
             .build()
         addPaint(p)
     }
 
+    /**
+     *  Subscribes to the messages received from the game and updates the status accordingly
+     *
+     *  @param messageEvent The message received form the game.
+     */
     @Subscribe
     open fun message(messageEvent: MessageEvent) {
+        // Ensure its a game message not a player trying to mess it up
+        if (messageEvent.sender.isNotEmpty()) {
+            return
+        }
+
         PouchTracker.messageEvent(messageEvent)
 
         // TODO Make this not in the script but somewhere else
@@ -116,21 +132,35 @@ class Script : TreeScript() {
             m.contains("fail to break-up the rock.") ||
             m.contains("not agile enough to get through the gap")
         ) {
-            println("Failed obstacle")
             configuration.failedObstacle = true
         }
     }
 
+    /**
+     *  Subscribes to changes in the inventory to update the current status of our pouches
+     *
+     *  @param inventoryChangeEvent The event received from the game
+     */
     @Subscribe
     fun inventoryChanged(inventoryChangeEvent: InventoryChangeEvent) {
         PouchTracker.inventoryChangedEvent(inventoryChangeEvent)
     }
 
+    /**
+     *  Subscribes to game actions which will update the current status of our pouches
+     *
+     *  @param gameActionEvent The event received in the game
+     */
     @Subscribe
     fun gameActionEvent(gameActionEvent: GameActionEvent) {
         PouchTracker.gameActionEvent(gameActionEvent)
     }
 
+    /**
+     *  Subscribes to game actions which will update the current status of our pouches
+     *
+     *  @param varpbitChangedEvent The event received in the game
+     */
     @Subscribe
     fun varpbitChanged(varpbitChangedEvent: VarpbitChangedEvent) {
         if (varpbitChangedEvent.index != 261) {

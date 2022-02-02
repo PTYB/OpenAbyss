@@ -69,10 +69,6 @@ object PouchTracker {
     }
 
     fun messageEvent(messageEvent: MessageEvent) {
-        if (messageEvent.sender.isNotEmpty()) {
-            return
-        }
-
         if (messageEvent.message.contains("There are no essences in this pouch.", true)) {
             when (lastPouch) {
                 ITEM_SMALL_POUCH -> smallPouchFull = false

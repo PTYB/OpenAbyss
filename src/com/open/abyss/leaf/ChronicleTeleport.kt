@@ -7,7 +7,6 @@ import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Leaf
 
 class ChronicleTeleport (script: Script) : Leaf<Script>(script, "Entering abyss") {
-
     override fun execute() {
         val item = Equipment.itemAt(Equipment.Slot.OFF_HAND)
 
