@@ -1,0 +1,145 @@
+package com.open.abyss
+
+import com.google.common.eventbus.Subscribe
+import com.open.abyss.Constants.AREA_COSMIC_ALTAR
+import com.open.abyss.branch.ShouldBank
+import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.extensions.count
+import com.open.abyss.models.RuneType
+import com.open.abyss.models.RunecraftingMethod
+import org.powbot.api.Notifications
+import org.powbot.api.event.GameActionEvent
+import org.powbot.api.event.InventoryChangeEvent
+import org.powbot.api.event.MessageEvent
+import org.powbot.api.event.VarpbitChangedEvent
+import org.powbot.api.rt4.Inventory
+import org.powbot.api.rt4.walking.model.Skill
+import org.powbot.api.script.OptionType
+import org.powbot.api.script.ScriptCategory
+import org.powbot.api.script.ScriptConfiguration
+import org.powbot.api.script.ScriptManifest
+import org.powbot.api.script.paint.Paint
+import org.powbot.api.script.paint.PaintBuilder
+import org.powbot.api.script.tree.TreeComponent
+import org.powbot.api.script.tree.TreeScript
+import org.powbot.mobile.script.ScriptManager
+import org.powbot.mobile.service.ScriptUploader
+import java.util.*
+
+@ScriptManifest(
+    name = "Open Abyss",
+    description = "Crafts rune using the abyss.",
+    version = "1.0.0",
+    category = ScriptCategory.Runecrafting,
+)
+@ScriptConfiguration.List(
+    [
+        ScriptConfiguration(
+            name = "Rune",
+            description = "Type of rune you wish to craft.",
+            optionType = OptionType.STRING,
+            defaultValue = "Air",
+            allowedValues = arrayOf("Air", "Cosmic", "Earth", "Fire", "Nature")
+        ),
+        ScriptConfiguration(
+            name = "Method",
+            description = "Method you wish to runecraft with.",
+            optionType = OptionType.STRING,
+            defaultValue = "Chronicle",
+            allowedValues = arrayOf("Chronicle", "House") //TODO , "HouseTablets")
+        ),
+        ScriptConfiguration(
+            name = "Food",
+            description = "Food you wish to eat when low.",
+            optionType = OptionType.STRING,
+        ),
+        ScriptConfiguration(
+            name = "Restore energy",
+            description = "Use energy potions to restore.",
+            optionType = OptionType.BOOLEAN,
+        ),
+    ]
+)
+class Script : TreeScript() {
+
+    override val rootComponent: TreeComponent<*> by lazy {
+        ShouldBank(this)
+    }
+
+    lateinit var configuration: Configuration
+
+    override fun onStart() {
+        super.onStart()
+        extractConfiguration()
+        addPaint()
+
+        // Varpbit doesnt update until its interacted locally, so assume full if it has essence
+        if (Inventory.count(Constants.ITEM_PURE_ESSENCE) > 0) {
+            PouchTracker.largePouchFull = true
+            PouchTracker.mediumPouchFull = true
+            PouchTracker.smallPouchFull = true
+        }
+    }
+
+    private fun extractConfiguration() {
+        val runeType = RuneType.valueOf(getOption<String>("Rune")!!)
+        val method = RunecraftingMethod.valueOf(getOption<String>("Method")!!)
+        val food = getOption<String>("Food")!!
+        val restoreEnergy = getOption<Boolean>("Restore energy")!!
+
+        if (food.isNullOrEmpty()) {
+            Notifications.showNotification("Please enter food to eat.")
+            ScriptManager.stop()
+            return
+        }
+        configuration = Configuration(runeType.altarArea, runeType.toString(), method, restoreEnergy, food)
+    }
+
+    private fun addPaint() {
+        val p: Paint = PaintBuilder.newBuilder()
+            .addString("Last leaf:") { lastLeaf.name }
+            .trackSkill(Skill.Runecrafting)
+            .trackInventoryItems()
+            .y(45)
+            .x(40)
+            .build()
+        addPaint(p)
+    }
+
+    @Subscribe
+    open fun message(messageEvent: MessageEvent) {
+        PouchTracker.messageEvent(messageEvent)
+
+        // TODO Make this not in the script but somewhere else
+        val m = messageEvent.message.lowercase(Locale.getDefault())
+        if (m.contains("but fail to distract them enough") ||
+            m.contains("fail to break-up the rock.") ||
+            m.contains("not agile enough to get through the gap")
+        ) {
+            println("Failed obstacle")
+            configuration.failedObstacle = true
+        }
+    }
+
+    @Subscribe
+    fun inventoryChanged(inventoryChangeEvent: InventoryChangeEvent) {
+        PouchTracker.inventoryChangedEvent(inventoryChangeEvent)
+    }
+
+    @Subscribe
+    fun gameActionEvent(gameActionEvent: GameActionEvent) {
+        PouchTracker.gameActionEvent(gameActionEvent)
+    }
+
+    @Subscribe
+    fun varpbitChanged(varpbitChangedEvent: VarpbitChangedEvent) {
+        if (varpbitChangedEvent.index != 261) {
+            return
+        }
+        PouchTracker.varpbitChanged(varpbitChangedEvent.newValue)
+    }
+}
+
+fun main(args: Array<String>) {
+    ScriptUploader().uploadAndStart("Open Abyss", "", "emulator-5564", true, false)
+}
