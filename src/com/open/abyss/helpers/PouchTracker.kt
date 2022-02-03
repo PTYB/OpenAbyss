@@ -1,5 +1,6 @@
-package com.open.abyss.com.open.abyss.helpers
+package com.open.abyss.helpers
 
+import com.open.abyss.Constants.ITEM_DAEYALT_ESSENCE
 import com.open.abyss.Constants.ITEM_LARGE_POUCH
 import com.open.abyss.Constants.ITEM_MEDIUM_POUCH
 import com.open.abyss.Constants.ITEM_SMALL_POUCH
@@ -35,7 +36,8 @@ object PouchTracker {
     }
 
     fun inventoryChangedEvent(inventoryChangeEvent: InventoryChangeEvent) {
-        if (inventoryChangeEvent.itemName != ITEM_PURE_ESSENCE) {
+        if (inventoryChangeEvent.itemName != ITEM_PURE_ESSENCE &&
+                inventoryChangeEvent.itemName != ITEM_DAEYALT_ESSENCE) {
             return
         }
 

@@ -31,7 +31,7 @@ class CrossDitch(script: Script) : Leaf<Script>(script, "Crossing ditch") {
     }
 
     private fun walkToDitch(ditch: GameObject) {
-        if (!ditch.inViewport()) {
+        if (!ditch.inViewport() || ditch.tile.distance() > 5) {
             val targetTile = Tile(ditch.tile.x, 3520)
             Movement.builder(targetTile)
                 .setWalkUntil { targetTile.distance() < 3 }

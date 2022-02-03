@@ -23,7 +23,7 @@ class ShouldCraftRunes(script: Script) : Branch<Script>(script, "Has essense in 
     override val failedComponent: TreeComponent<Script> = EmptyPouches(script)
 
     override fun validate(): Boolean {
-        return Inventory.count(Constants.ITEM_PURE_ESSENCE) > 0
+        return Inventory.count(script.configuration.essenceName) > 0
     }
 }
 

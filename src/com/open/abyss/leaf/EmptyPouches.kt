@@ -1,7 +1,7 @@
 package com.open.abyss.leaf
 
 import com.open.abyss.Script
-import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.helpers.PouchTracker
 import org.powbot.api.Condition
 import org.powbot.api.Random
 import org.powbot.api.rt4.Inventory

@@ -3,10 +3,9 @@ package com.open.abyss.leaf
 import com.open.abyss.Constants.ITEM_LARGE_POUCH
 import com.open.abyss.Constants.ITEM_MEDIUM_POUCH
 import com.open.abyss.Constants.ITEM_SMALL_POUCH
-import com.open.abyss.Constants.ITEM_PURE_ESSENCE
 import com.open.abyss.Script
 import com.open.abyss.extensions.count
-import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.helpers.PouchTracker
 import org.powbot.api.Condition
 import org.powbot.api.Random
 import org.powbot.api.rt4.Inventory
@@ -46,6 +45,6 @@ class FillAllPouches(script: Script) : Leaf<Script>(script, "Fill pouches") {
     }
 
     private fun fillPouch(item: Item): Boolean {
-        return Inventory.count(ITEM_PURE_ESSENCE) > 0 && item.interact("Fill")
+        return Inventory.count(script.configuration.essenceName) > 0 && item.interact("Fill")
     }
 }

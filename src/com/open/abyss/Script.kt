@@ -2,7 +2,7 @@ package com.open.abyss
 
 import com.google.common.eventbus.Subscribe
 import com.open.abyss.branch.IsBankOpened
-import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
 import com.open.abyss.models.RuneType
 import com.open.abyss.models.RunecraftingMethod
@@ -28,13 +28,20 @@ import java.util.*
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.2",
+    version = "1.0.3",
     category = ScriptCategory.Runecrafting,
     author = "PTY",
     markdownFileName = "OpenAbyss.md"
 )
 @ScriptConfiguration.List(
     [
+        ScriptConfiguration(
+            name = "Essence",
+            description = "Type of essence you wish to use.",
+            optionType = OptionType.STRING,
+            defaultValue = "Pure essence",
+            allowedValues = arrayOf("Pure essence", "Daeyalt essence")
+        ),
         ScriptConfiguration(
             name = "Rune",
             description = "Type of rune you wish to craft.",
@@ -76,7 +83,7 @@ class Script : TreeScript() {
         addPaint()
 
         // Varpbit doesnt update until its interacted locally, so assume full if it has essence
-        if (Inventory.count(Constants.ITEM_PURE_ESSENCE) > 0) {
+        if (Inventory.count(configuration.essenceName) > 0) {
             PouchTracker.largePouchFull = true
             PouchTracker.mediumPouchFull = true
             PouchTracker.smallPouchFull = true
@@ -91,6 +98,7 @@ class Script : TreeScript() {
         val method = RunecraftingMethod.valueOf(getOption<String>("Method")!!)
         val food = getOption<String>("Food")!!
         val restoreEnergy = getOption<Boolean>("Restore energy")!!
+        val essenceType = getOption<String>("Essence")!!
 
         if (food.isNullOrEmpty()) {
             Notifications.showNotification("Please enter food to eat.")
@@ -98,7 +106,7 @@ class Script : TreeScript() {
             return
         }
 
-        configuration = Configuration(runeType.altarArea, runeType, method, restoreEnergy, food)
+        configuration = Configuration(essenceType, runeType.altarArea, runeType, method, restoreEnergy, food)
     }
 
     private fun addPaint() {
@@ -171,5 +179,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "emulator-5564", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "emulator-5566", true, false)
 }

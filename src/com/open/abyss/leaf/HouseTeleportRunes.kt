@@ -18,7 +18,7 @@ class HouseTeleportRunes(script: Script) : Leaf<Script>(script, "House teleport 
         }
 
         if (Magic.Spell.TELEPORT_TO_HOUSE.canCast()) {
-            if (Magic.Spell.TELEPORT_TO_HOUSE.cast()) {
+            if (Magic.Spell.TELEPORT_TO_HOUSE.cast("Cast")) {
                 Condition.wait { House.inside() }
             }
         } else {

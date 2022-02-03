@@ -1,7 +1,7 @@
 package com.open.abyss.branch
 
 import com.open.abyss.Script
-import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
 import com.open.abyss.leaf.*
 import com.open.abyss.leaf.bankopened.*
@@ -9,7 +9,6 @@ import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
-import java.util.logging.Logger
 
 class HasFoodToEat(script: Script) : Branch<Script>(script, "Has food to eat?") {
     override val successComponent: TreeComponent<Script> = EatFood(script)
@@ -77,7 +76,7 @@ class ShouldFillPouches(script: Script) : Branch<Script>(script, "Fill all pouch
     override val failedComponent: TreeComponent<Script> = WithdrawEssence(script)
 
     override fun validate(): Boolean {
-        return Inventory.count(com.open.abyss.Constants.ITEM_PURE_ESSENCE) > 0
+        return Inventory.count(script.configuration.essenceName) > 0
     }
 }
 

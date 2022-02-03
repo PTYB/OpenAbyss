@@ -2,7 +2,7 @@ package com.open.abyss.branch
 
 import com.open.abyss.Constants
 import com.open.abyss.Script
-import com.open.abyss.com.open.abyss.helpers.PouchTracker
+import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
 import com.open.abyss.helpers.House
 import com.open.abyss.leaf.*
@@ -16,7 +16,7 @@ class ShouldRunecraft(script: Script) : Branch<Script>(script, "Checking essense
     override val failedComponent: TreeComponent<Script> = InAltar(script)
 
     override fun validate(): Boolean {
-        return PouchTracker.hasPouchToEmpty() || Inventory.count(Constants.ITEM_PURE_ESSENCE) > 0
+        return PouchTracker.hasPouchToEmpty() || Inventory.count(script.configuration.essenceName) > 0
     }
 }
 

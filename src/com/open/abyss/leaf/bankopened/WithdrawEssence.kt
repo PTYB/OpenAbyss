@@ -17,7 +17,7 @@ class WithdrawEssence(script: Script) : Leaf<Script>(script, "Consume supplies")
 
     init {
         val items = mutableListOf(
-            Constants.ITEM_PURE_ESSENCE,
+            script.configuration.essenceName,
             Constants.ITEM_SMALL_POUCH,
             Constants.ITEM_MEDIUM_POUCH,
             Constants.ITEM_LARGE_POUCH
@@ -31,14 +31,14 @@ class WithdrawEssence(script: Script) : Leaf<Script>(script, "Consume supplies")
 
     override fun execute() {
         if (Bank.depositAllExcept(*itemsToKeep)) {
-            val bankEssenceCount = Bank.stream().name(Constants.ITEM_PURE_ESSENCE).first()
+            val bankEssenceCount = Bank.stream().name(script.configuration.essenceName).first()
             if (bankEssenceCount == Item.Nil || bankEssenceCount.stackSize() == 0) {
-                Notifications.showNotification("Out of essence stopping")
-                logger.info("Out of essence stopping")
+                Notifications.showNotification("Out of ${script.configuration.essenceName} stopping")
+                logger.info("Out of ${script.configuration.essenceName} stopping")
                 ScriptManager.stop()
                 return
             }
-            Bank.withdraw(Constants.ITEM_PURE_ESSENCE, 0)
+            Bank.withdraw(script.configuration.essenceName, 0)
         }
     }
 }

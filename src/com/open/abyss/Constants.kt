@@ -10,6 +10,7 @@ object Constants {
     const val NAME_ZAMORAK_MAGE = "Mage of Zamorak"
     const val NAME_REPAIR_MAGE = "Dark mage"
 
+    const val ITEM_DAEYALT_ESSENCE = "Daeyalt essence"
     const val ITEM_PURE_ESSENCE = "Pure essence"
     const val ITEM_SMALL_POUCH = "Small pouch"
     const val ITEM_MEDIUM_POUCH = "Medium pouch"
