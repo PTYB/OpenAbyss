@@ -13,7 +13,7 @@ class WithdrawEnergyItems(script: Script) : Leaf<Script>(script, "Withdrawing su
     private val logger = Logger.getLogger(this.javaClass.name)
 
     override fun execute() {
-        val item = Bank.stream().filter{SupplyHelper.isEnergyPotion(it.name()) }.minByOrNull { it.stack }
+        val item = Bank.stream().filter{SupplyHelper.isEnergyPotion(it.name()) }.maxByOrNull { it.stack }
 
         if (item == Item.Nil || item == null) {
             Notifications.showNotification("Out of energy restore items stopping")
