@@ -53,6 +53,7 @@ import java.util.*
             name = "Food",
             description = "Food you wish to eat when low.",
             optionType = OptionType.STRING,
+            allowedValues = arrayOf("Trout", "Salmon", "Tuna", "Lobster", "Bass", "Swordfish", "Monkfish")
         ),
         ScriptConfiguration(
             name = "Restore energy",

@@ -8,8 +8,12 @@ object SupplyCalculator {
 
     val foodList = mapOf(
         "Trout" to 7,
+        "Salmon" to 9,
+        "Tuna" to 10,
         "Lobster" to 12,
-        "Bass" to 13
+        "Bass" to 13,
+        "Swordfish" to 14,
+        "Monkfish" to 16,
     )
 
     val staminaList = mapOf(
