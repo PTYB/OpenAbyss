@@ -17,7 +17,7 @@ class WithdrawEnergyItems(script: Script) : Leaf<Script>(script, "Withdrawing su
     override fun execute() {
         val item = Bank.stream().filter(Constants.energyPotionFilter).maxByOrNull { it.stack }!!
 
-        if (item == Item.Nil) {
+        if (item == Item.Nil || item == null) {
             Notifications.showNotification("Out of energy restore items stopping")
             logger.info("Out of energy restore items stopping")
             ScriptManager.stop()

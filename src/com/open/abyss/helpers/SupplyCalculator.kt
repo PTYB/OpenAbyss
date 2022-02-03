@@ -21,6 +21,10 @@ object SupplyCalculator {
         "Energy potion(3)" to 30,
         "Energy potion(2)" to 20,
         "Energy potion(1)" to 10,
+        "Super energy(4)" to 80,
+        "Super energy(3)" to 60,
+        "Super energy(2)" to 40,
+        "Super energy(1)" to 20,
         "Strange fruit" to 30,
     )
 
