@@ -28,7 +28,7 @@ import java.util.*
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.1",
+    version = "1.0.2",
     category = ScriptCategory.Runecrafting,
     author = "PTY",
     markdownFileName = "OpenAbyss.md"

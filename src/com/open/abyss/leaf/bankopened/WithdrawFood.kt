@@ -19,9 +19,6 @@ class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing supplies"
     private val healthRequired = lazy {
         (Combat.maxHealth() * script.configuration.healthRestorePercent / 100L).toInt()
     }
-    private val foodHealing = lazy {
-        SupplyCalculator.foodList[foodName]
-    }
 
     override fun execute() {
         val foodRequired = SupplyCalculator.foodRequired(foodName, healthRequired.value)
