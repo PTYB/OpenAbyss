@@ -22,7 +22,7 @@ class EnterAbyss(script: Script) : Leaf<Script>(script, "Entering abyss") {
             }
         } else {
             val tile = if (mage != Npc.Nil) mage.tile() else TILE_ZAMORAK_MAGE
-            Movement.step(tile)
+            Movement.step(tile, 3)
         }
     }
 

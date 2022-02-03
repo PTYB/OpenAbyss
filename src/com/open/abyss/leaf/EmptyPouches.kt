@@ -5,6 +5,7 @@ import com.open.abyss.com.open.abyss.helpers.PouchTracker
 import org.powbot.api.Condition
 import org.powbot.api.Random
 import org.powbot.api.rt4.Inventory
+import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Leaf
 
 class EmptyPouches(script: Script) : Leaf<Script>(script, "Emptying pouches") {
@@ -14,6 +15,11 @@ class EmptyPouches(script: Script) : Leaf<Script>(script, "Emptying pouches") {
 
         if (!Inventory.opened()) {
             Inventory.open()
+        }
+
+        // When crafting you can't withdraw from pouch
+        if (Players.local().animation() != -1) {
+            Condition.wait { Players.local().animation() == -1 }
         }
 
         pouchesWithEss.forEach {

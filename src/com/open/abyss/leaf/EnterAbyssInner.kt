@@ -20,13 +20,13 @@ class EnterAbyssInner(script: Script) : Leaf<Script>(script, "Enter abyss inner"
     override fun execute() {
         val nearestGameObject = Objects.nearestGameObject(*gameObjectList)
 
-        if (!nearestGameObject.inViewport()) {
+        if (!nearestGameObject.inViewport(true)) {
             val path = LocalPathFinder.findPath(nearestGameObject.getWalkableNeighbor(false))
-            path.traverseUntilReached(3.0) { nearestGameObject.tile.distance() < 4 && nearestGameObject.inViewport() }
+            path.traverseUntilReached(3.0) { nearestGameObject.tile.distance() < 4 && nearestGameObject.inViewport(true) }
             Condition.sleep(Random.nextInt(70, 200))
         }
 
-        if (nearestGameObject.inViewport()) {
+        if (nearestGameObject.inViewport(true)) {
             val interaction = getInteraction(nearestGameObject.name)
             if (nearestGameObject.interact(interaction)) {
                 if (Condition.wait { failed || Players.local().animation() != -1 } && !failed) {
