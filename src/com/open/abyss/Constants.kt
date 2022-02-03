@@ -45,28 +45,4 @@ object Constants {
         Tile(3056, 4834),
         Tile(3052, 4845)
     )
-
-
-    // TODO Remove need for this
-    val energyPotionNames = arrayOf(
-        "Energy Potion(4)", "Energy Potion(3)", "Energy Potion(2)",
-        "Energy Potion(1)", "Strange fruit", "Super energy(4)", "Super energy(3)", "Super energy(2)", "Super energy(1)"
-    )
-
-    val energyPotionFilter = nameContainsFilter("energy potion", "Strange fruit", "super energy")
-
-    // TODO Move to extension
-    private fun nameContainsFilter(vararg names: String): Filter<Item> {
-        return object : Filter<Item> {
-            override fun accept(t: Item?): Boolean {
-                if (t == null || t == Item.Nil) {
-                    return false
-                }
-
-                return names.any {
-                    t.name().contains(it, true)
-                }
-            }
-        }
-    }
 }

@@ -1,15 +1,12 @@
 package com.open.abyss.leaf.bankopened
 
 import com.open.abyss.Script
-import com.open.abyss.extensions.count
-import com.open.abyss.helpers.SupplyCalculator
+import com.open.abyss.helpers.SupplyHelper
 import org.powbot.api.Notifications
 import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Leaf
 import org.powbot.mobile.script.ScriptManager
 import java.util.logging.Logger
-import kotlin.math.absoluteValue
-import kotlin.math.ceil
 
 class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing supplies") {
 
@@ -21,7 +18,7 @@ class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing supplies"
     }
 
     override fun execute() {
-        val foodRequired = SupplyCalculator.foodRequired(foodName, healthRequired.value)
+        val foodRequired = SupplyHelper.foodRequired(foodName, healthRequired.value)
         logger.info("Food required $foodRequired. Current HP ${Combat.maxHealth()}, required HP ${healthRequired.value}")
         if (foodRequired > 0) {
             withdrawItem(foodName, foodRequired)

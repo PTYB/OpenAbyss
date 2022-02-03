@@ -179,5 +179,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "emulator-5566", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5567", true, false)
 }

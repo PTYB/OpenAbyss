@@ -3,6 +3,7 @@ package com.open.abyss.branch
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
+import com.open.abyss.helpers.SupplyHelper
 import com.open.abyss.leaf.*
 import com.open.abyss.leaf.bankopened.*
 import com.open.abyss.models.RunecraftingMethod
@@ -33,7 +34,7 @@ class HasEnergyRestorationItems(script: Script) : Branch<Script>(script, "Withdr
     override val failedComponent: TreeComponent<Script> = ShouldWithdrawEnergyRestorationItems(script)
 
     override fun validate(): Boolean {
-        return script.configuration.useEnergyRestore && Inventory.count(*com.open.abyss.Constants.energyPotionNames) > 0
+        return script.configuration.useEnergyRestore && Inventory.count(*SupplyHelper.energyPotionNames()) > 0
     }
 }
 
