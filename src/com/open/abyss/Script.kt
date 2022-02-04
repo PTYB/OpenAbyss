@@ -112,6 +112,7 @@ class Script : TreeScript() {
     private fun addPaint() {
         val p: Paint = PaintBuilder.newBuilder()
             .addString("Last leaf:") { lastLeaf.name }
+            .addString("Method") { configuration.teleport.toString() }
             .trackSkill(Skill.Runecrafting)
             .trackInventoryItems(configuration.runeType.runeId)
             .y(45)

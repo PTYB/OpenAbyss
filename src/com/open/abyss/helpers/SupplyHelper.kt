@@ -2,9 +2,11 @@ package com.open.abyss.helpers
 
 import org.powbot.api.rt4.Combat
 import org.powbot.api.rt4.Movement
+import java.util.logging.Logger
 import kotlin.math.ceil
 
 object SupplyHelper {
+    private val logger = Logger.getLogger(this.javaClass.name)
 
     val foodList = mapOf(
         "Trout" to 7,
@@ -30,11 +32,12 @@ object SupplyHelper {
 
     fun foodRequired(foodName: String, healthRequired: Int): Int {
         val foodHealing = foodList[foodName]!!
-        return ceil((healthRequired - Combat.health()) / foodHealing.toDouble()).toInt()
+        val healthRemaining = healthRequired - Combat.health()
+        return ceil(healthRemaining / foodHealing.toDouble()).toInt()
     }
 
     fun staminaItemsRequired(itemName: String, energyRequired: Int): Int {
-        val energyRestore = SupplyHelper.staminaList[itemName]!!
+        val energyRestore = staminaList[itemName]!!
         return ceil((energyRequired - Movement.energyLevel()) / energyRestore.toDouble()).toInt()
     }
 

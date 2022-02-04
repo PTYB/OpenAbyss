@@ -25,7 +25,7 @@ class EmptyPouches(script: Script) : Leaf<Script>(script, "Emptying pouches") {
         pouchesWithEss.forEach {
             if (it.interact("Empty")) {
                 // TODO Add better trigger/time to open. Could do frames maybe?
-                Condition.sleep(Random.nextInt(900, 1000))
+                Condition.sleep(Random.nextInt(550, 650))
             }
         }
     }

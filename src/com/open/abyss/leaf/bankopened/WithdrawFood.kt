@@ -14,12 +14,11 @@ class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing supplies"
 
     private val foodName: String get() = script.configuration.foodName
     private val healthRequired = lazy {
-        (Combat.maxHealth() * script.configuration.healthRestorePercent / 100L).toInt()
+        (Combat.maxHealth() * (script.configuration.healthRestorePercent / 100.0)).toInt()
     }
 
     override fun execute() {
         val foodRequired = SupplyHelper.foodRequired(foodName, healthRequired.value)
-        logger.info("Food required $foodRequired. Current HP ${Combat.maxHealth()}, required HP ${healthRequired.value}")
         if (foodRequired > 0) {
             withdrawItem(foodName, foodRequired)
         } else {

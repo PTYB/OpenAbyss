@@ -3,6 +3,7 @@ package com.open.abyss.leaf
 import com.open.abyss.Script
 import com.open.abyss.extensions.nearestGameObject
 import org.powbot.api.Condition
+import org.powbot.api.Random
 import org.powbot.api.Tile
 import org.powbot.api.rt4.GameObject
 import org.powbot.api.rt4.Movement
@@ -20,7 +21,7 @@ class CrossDitch(script: Script) : Leaf<Script>(script, "Crossing ditch") {
             .shuffled().firstOrNull() ?: GameObject.Nil
 
         if (ditch == GameObject.Nil) {
-            Movement.builder(ditchTile)
+            Movement.builder(ditchTile.derive(0, Random.nextInt(0,-1)))
                 .setWalkUntil { ditchTile.distance() < 3 }
                 .setRunMin(50)
                 .setRunMax(70)

@@ -10,6 +10,7 @@ import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
+import java.util.logging.Logger
 
 class HasFoodToEat(script: Script) : Branch<Script>(script, "Has food to eat?") {
     override val successComponent: TreeComponent<Script> = EatFood(script)
@@ -24,8 +25,11 @@ class ShouldWithdrawFood(script: Script) : Branch<Script>(script, "Should withdr
     override val successComponent: TreeComponent<Script> = WithdrawFood(script)
     override val failedComponent: TreeComponent<Script> = HasEnergyRestorationItems(script)
 
+    private val healthRequired = lazy {
+        (Combat.maxHealth() * (script.configuration.healthRestorePercent / 100.0)).toInt()
+    }
     override fun validate(): Boolean {
-        return Combat.healthPercent() < script.configuration.healthRestorePercent
+        return Combat.health() < healthRequired.value
     }
 }
 

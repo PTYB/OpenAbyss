@@ -18,7 +18,7 @@ class InAltarWithEssense(script: Script) : Branch<Script>(script, "In altar with
     }
 }
 
-class ShouldCraftRunes(script: Script) : Branch<Script>(script, "Has essense in inventory") {
+class ShouldCraftRunes(script: Script) : Branch<Script>(script, "Has essence in inventory") {
     override val successComponent: TreeComponent<Script> = CraftAtAltar(script)
     override val failedComponent: TreeComponent<Script> = EmptyPouches(script)
 

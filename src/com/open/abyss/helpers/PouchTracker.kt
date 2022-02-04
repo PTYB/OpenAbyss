@@ -44,7 +44,7 @@ object PouchTracker {
         when (inventoryChangeEvent.quantityChange) {
             3 -> smallPouchFull = false
             6 -> mediumPouchFull = false
-            9 -> largePouchFull = false
+            7,9 -> largePouchFull = false // 7 = decayed
         }
     }
 

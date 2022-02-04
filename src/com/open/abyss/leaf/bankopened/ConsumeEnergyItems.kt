@@ -6,6 +6,7 @@ import org.powbot.api.Condition
 import org.powbot.api.rt4.Bank
 import org.powbot.api.rt4.Inventory
 import org.powbot.api.rt4.Movement
+import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Leaf
 
 class ConsumeEnergyItems(script: Script) : Leaf<Script>(script, "Consume supplies") {
@@ -19,7 +20,7 @@ class ConsumeEnergyItems(script: Script) : Leaf<Script>(script, "Consume supplie
         } else if (energyPotion.isNotEmpty()) {
             energyPotion.forEach {
                 val action = if (it.actions().contains("Drink")) "Drink" else "Eat"
-                it.interact(action) && Condition.wait { !it.valid() }
+                it.interact(action) && Condition.wait { !it.valid() && Players.local().animation() == -1}
 
                 if (Movement.energyLevel() == 100) {
                     return

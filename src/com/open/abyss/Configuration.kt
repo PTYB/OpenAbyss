@@ -16,7 +16,7 @@ data class Configuration(
     // TODO Make this shit not ugly
     var failedObstacle = false
 
-    val healthRestorePercent = 70
+    val healthRestorePercent = 83
     val energyRestore = 70
 
 }
