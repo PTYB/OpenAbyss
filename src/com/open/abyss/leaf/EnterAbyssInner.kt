@@ -36,6 +36,8 @@ class EnterAbyssInner(script: Script) : Leaf<Script>(script, "Enter abyss inner"
                 // If it fails to click walk closer to avoid NPCS
                 Movement.step(nearestGameObject)
             }
+        } else {
+            Movement.step(nearestGameObject)
         }
 
         // TODO Create manager which listens for certain events

@@ -28,7 +28,7 @@ import java.util.*
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.3",
+    version = "1.0.4",
     category = ScriptCategory.Runecrafting,
     author = "PTY",
     markdownFileName = "OpenAbyss.md"
@@ -54,7 +54,7 @@ import java.util.*
             description = "Method you wish to runecraft with.",
             optionType = OptionType.STRING,
             defaultValue = "Chronicle",
-            allowedValues = arrayOf("Chronicle", "House") //TODO , "HouseTablets")
+            allowedValues = arrayOf("Chronicle", "House", "HouseTablets")
         ),
         ScriptConfiguration(
             name = "Food",

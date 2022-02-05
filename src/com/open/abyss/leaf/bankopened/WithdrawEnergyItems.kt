@@ -1,6 +1,7 @@
 package com.open.abyss.leaf.bankopened
 
 import com.open.abyss.Script
+import com.open.abyss.extensions.mustWithdrawItem
 import com.open.abyss.helpers.SupplyHelper
 import org.powbot.api.Notifications
 import org.powbot.api.rt4.*
@@ -13,7 +14,7 @@ class WithdrawEnergyItems(script: Script) : Leaf<Script>(script, "Withdrawing su
     private val logger = Logger.getLogger(this.javaClass.name)
 
     override fun execute() {
-        val item = Bank.stream().filter{SupplyHelper.isEnergyPotion(it.name()) }.maxByOrNull { it.stack }
+        val item = Bank.stream().filter { SupplyHelper.isEnergyPotion(it.name()) }.maxByOrNull { it.stack }
 
         if (item == Item.Nil || item == null) {
             Notifications.showNotification("Out of energy restore items stopping")
@@ -24,6 +25,6 @@ class WithdrawEnergyItems(script: Script) : Leaf<Script>(script, "Withdrawing su
 
         val itemsRequired = SupplyHelper.staminaItemsRequired(item.name(), script.configuration.energyRestore)
         logger.info("Energy restoring items required $itemsRequired")
-        Bank.withdraw(item.name(), itemsRequired)
+        Bank.mustWithdrawItem(item.name(), itemsRequired)
     }
 }

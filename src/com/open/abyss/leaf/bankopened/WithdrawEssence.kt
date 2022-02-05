@@ -1,6 +1,7 @@
 package com.open.abyss.leaf.bankopened
 
 import com.open.abyss.Constants
+import com.open.abyss.Constants.ITEM_HOUSE_TELEPORT
 import com.open.abyss.Script
 import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.Notifications
@@ -24,6 +25,8 @@ class WithdrawEssence(script: Script) : Leaf<Script>(script, "Consume supplies")
         )
         if (script.configuration.teleport == RunecraftingMethod.House) {
             items.addAll(arrayOf(Constants.ITEM_RUNE_AIR, Constants.ITEM_RUNE_EARTH, Constants.ITEM_RUNE_LAW))
+        } else if (script.configuration.teleport == RunecraftingMethod.HouseTablets) {
+            items.add(ITEM_HOUSE_TELEPORT)
         }
 
         itemsToKeep = items.toTypedArray()

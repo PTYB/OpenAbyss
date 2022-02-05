@@ -18,6 +18,7 @@ object Constants {
     const val ITEM_RUNE_AIR = "Air rune"
     const val ITEM_RUNE_EARTH = "Earth rune"
     const val ITEM_RUNE_LAW = "Law rune"
+    const val ITEM_HOUSE_TELEPORT = "Teleport to house"
 
     val ID_DECAYED_POUCHES = arrayOf(5511, 5513).toIntArray()
 

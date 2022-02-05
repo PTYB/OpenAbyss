@@ -1,5 +1,6 @@
 package com.open.abyss.branch
 
+import com.open.abyss.Constants.ITEM_HOUSE_TELEPORT
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
@@ -28,6 +29,7 @@ class ShouldWithdrawFood(script: Script) : Branch<Script>(script, "Should withdr
     private val healthRequired = lazy {
         (Combat.maxHealth() * (script.configuration.healthRestorePercent / 100.0)).toInt()
     }
+
     override fun validate(): Boolean {
         return Combat.health() < healthRequired.value
     }
@@ -53,7 +55,7 @@ class ShouldWithdrawEnergyRestorationItems(script: Script) : Branch<Script>(scri
 
 class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw runes") {
     override val successComponent: TreeComponent<Script> = WithdrawRunes(script)
-    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawTablet(script)
 
     override fun validate(): Boolean {
         if (script.configuration.teleport != RunecraftingMethod.House) {
@@ -61,6 +63,18 @@ class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw run
         }
         return Inventory.count(com.open.abyss.Constants.ITEM_RUNE_LAW) == 0 || Inventory.count(com.open.abyss.Constants.ITEM_RUNE_AIR) == 0 ||
                 Inventory.count(com.open.abyss.Constants.ITEM_RUNE_EARTH) == 0
+    }
+}
+
+class ShouldWithdrawTablet(script: Script) : Branch<Script>(script, "Withdraw tablets") {
+    override val successComponent: TreeComponent<Script> = WithdrawTablet(script)
+    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+
+    override fun validate(): Boolean {
+        if (script.configuration.teleport != RunecraftingMethod.HouseTablets) {
+            return false
+        }
+        return Inventory.count(ITEM_HOUSE_TELEPORT) == 0
     }
 }
 
