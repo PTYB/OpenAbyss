@@ -6,8 +6,6 @@ import java.util.logging.Logger
 import kotlin.math.ceil
 
 object SupplyHelper {
-    private val logger = Logger.getLogger(this.javaClass.name)
-
     val foodList = mapOf(
         "Trout" to 7,
         "Salmon" to 9,

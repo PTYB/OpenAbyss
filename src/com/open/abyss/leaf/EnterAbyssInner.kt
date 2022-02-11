@@ -28,9 +28,12 @@ class EnterAbyssInner(script: Script) : Leaf<Script>(script, "Enter abyss inner"
 
         if (nearestGameObject.inViewport(true)) {
             val interaction = getInteraction(nearestGameObject.name)
+
+            // TODO Create manager which listens for certain events
+            failed = false
             if (nearestGameObject.interact(interaction)) {
                 if (Condition.wait { failed || Players.local().animation() != -1 } && !failed) {
-                    Condition.wait({ failed || AREA_INNER_ABYSS.contains(Players.local()) }, 1000, 8)
+                    Condition.wait({ failed || AREA_INNER_ABYSS.contains(Players.local()) }, 500, 16)
                 }
             } else {
                 // If it fails to click walk closer to avoid NPCS
@@ -39,9 +42,6 @@ class EnterAbyssInner(script: Script) : Leaf<Script>(script, "Enter abyss inner"
         } else {
             Movement.step(nearestGameObject)
         }
-
-        // TODO Create manager which listens for certain events
-        failed = false
     }
 
     private fun getInteraction(name: String): String {

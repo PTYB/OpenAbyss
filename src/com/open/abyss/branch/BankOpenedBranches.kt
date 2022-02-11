@@ -11,7 +11,6 @@ import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
-import java.util.logging.Logger
 
 class HasFoodToEat(script: Script) : Branch<Script>(script, "Has food to eat?") {
     override val successComponent: TreeComponent<Script> = EatFood(script)
@@ -35,7 +34,7 @@ class ShouldWithdrawFood(script: Script) : Branch<Script>(script, "Should withdr
     }
 }
 
-class HasEnergyRestorationItems(script: Script) : Branch<Script>(script, "Withdraw supplies") {
+class HasEnergyRestorationItems(script: Script) : Branch<Script>(script, "Has energy restore items?") {
     override val successComponent: TreeComponent<Script> = ConsumeEnergyItems(script)
     override val failedComponent: TreeComponent<Script> = ShouldWithdrawEnergyRestorationItems(script)
 
@@ -44,7 +43,7 @@ class HasEnergyRestorationItems(script: Script) : Branch<Script>(script, "Withdr
     }
 }
 
-class ShouldWithdrawEnergyRestorationItems(script: Script) : Branch<Script>(script, "Withdraw supplies") {
+class ShouldWithdrawEnergyRestorationItems(script: Script) : Branch<Script>(script, "Should withdraw energy restoration") {
     override val successComponent: TreeComponent<Script> = WithdrawEnergyItems(script)
     override val failedComponent: TreeComponent<Script> = ShouldWithdrawRunes(script)
 

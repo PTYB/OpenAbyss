@@ -28,7 +28,7 @@ class UseGlory(script: Script) : Leaf<Script>(script, "Using glory") {
 
         if (!tile.reachable()) {
             Movement.builder(tile)
-                .setWalkUntil{tile.reachable()}
+                .setWalkUntil { tile.reachable() }
                 .move()
         }
 
