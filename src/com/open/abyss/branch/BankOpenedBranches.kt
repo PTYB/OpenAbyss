@@ -1,5 +1,6 @@
 package com.open.abyss.branch
 
+import com.open.abyss.Constants
 import com.open.abyss.Constants.ITEM_HOUSE_TELEPORT
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
@@ -67,13 +68,26 @@ class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw run
 
 class ShouldWithdrawTablet(script: Script) : Branch<Script>(script, "Withdraw tablets") {
     override val successComponent: TreeComponent<Script> = WithdrawTablet(script)
-    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawRing(script)
 
     override fun validate(): Boolean {
         if (script.configuration.teleport != RunecraftingMethod.HouseTablets) {
             return false
         }
         return Inventory.count(ITEM_HOUSE_TELEPORT) == 0
+    }
+}
+
+class ShouldWithdrawRing(script: Script) : Branch<Script>(script, "Withdraw Ring of dueling?") {
+    override val successComponent: TreeComponent<Script> = WithdrawRing(script)
+    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+
+    override fun validate(): Boolean {
+        if (script.configuration.teleport != RunecraftingMethod.RingOfDueling) {
+            return false
+        }
+        val ring = Equipment.itemAt(Equipment.Slot.RING)
+        return Equipment.stream().id(*Constants.ID_RING_OF_DUELING).first().name().isEmpty()
     }
 }
 

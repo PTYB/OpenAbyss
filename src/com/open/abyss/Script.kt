@@ -57,7 +57,7 @@ import java.util.logging.Logger
             description = "Method you wish to runecraft with.",
             optionType = OptionType.STRING,
             defaultValue = "Chronicle",
-            allowedValues = arrayOf("Chronicle", "House", "HouseTablets")
+            allowedValues = arrayOf("Chronicle", "House", "HouseTablets", "RingOfDueling")
         ),
         ScriptConfiguration(
             name = "Food",

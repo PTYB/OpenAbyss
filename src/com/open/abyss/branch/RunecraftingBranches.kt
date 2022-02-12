@@ -4,6 +4,7 @@ import com.open.abyss.Constants
 import com.open.abyss.Script
 import com.open.abyss.extensions.count
 import com.open.abyss.leaf.*
+import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.rt4.Inventory
 import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Branch
@@ -29,12 +30,22 @@ class ShouldCraftRunes(script: Script) : Branch<Script>(script, "Has essence in 
 
 class InAbyss(script: Script) : Branch<Script>(script, "In abyss") {
     override val successComponent: TreeComponent<Script> = InInnerAbyssRing(script)
-    override val failedComponent: TreeComponent<Script> = PassedDitch(script)
+    override val failedComponent: TreeComponent<Script> = UsingFerox(script)
 
     override fun validate(): Boolean {
         return Constants.AREA_ABYSS.contains(Players.local())
     }
 }
+class UsingFerox(script: Script) : Branch<Script>(script, "Using Ferox") {
+    override val successComponent: TreeComponent<Script> = WalkedFromFerox(script)
+    override val failedComponent: TreeComponent<Script> = PassedDitch(script)
+
+    override fun validate(): Boolean {
+        return script.configuration.teleport == RunecraftingMethod.RingOfDueling
+    }
+}
+
+
 
 class PassedDitch(script: Script) : Branch<Script>(script, "Past ditch") {
     override val successComponent: TreeComponent<Script> = EnterAbyss(script)
@@ -42,6 +53,15 @@ class PassedDitch(script: Script) : Branch<Script>(script, "Past ditch") {
 
     override fun validate(): Boolean {
         return Players.local().y() >= 3523
+    }
+}
+
+class WalkedFromFerox(script: Script) : Branch<Script>(script, "Walk to mage") {
+    override val successComponent: TreeComponent<Script> = LeaveFerox(script)
+    override val failedComponent: TreeComponent<Script> = EnterAbyss(script)
+
+    override fun validate(): Boolean {
+        return Constants.AREA_FEROX.contains(Players.local())
     }
 }
 

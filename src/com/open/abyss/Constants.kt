@@ -10,6 +10,7 @@ object Constants {
     const val NAME_ZAMORAK_MAGE = "Mage of Zamorak"
     const val NAME_REPAIR_MAGE = "Dark mage"
 
+    const val ITEM_RING_OF_DUELING = "Ring of dueling(8)"
     const val ITEM_DAEYALT_ESSENCE = "Daeyalt essence"
     const val ITEM_PURE_ESSENCE = "Pure essence"
     const val ITEM_SMALL_POUCH = "Small pouch"
@@ -21,6 +22,7 @@ object Constants {
     const val ITEM_HOUSE_TELEPORT = "Teleport to house"
 
     val ID_DECAYED_POUCHES = arrayOf(5511, 5513).toIntArray()
+    val ID_RING_OF_DUELING = arrayOf(2552, 2554, 2556, 2558, 2560, 2562, 2564, 2566).toIntArray()
 
     val TILE_ZAMORAK_MAGE = Tile(3106, 3558, 0)
 
@@ -35,6 +37,12 @@ object Constants {
     val BANK_EDGEVILLE = Tile(3094, 3490)
     val TILE_VARROCK_DITCH = Tile(3137, 3520, 0)
     val TILE_EDGEVILLE_DITCH = Tile(3108, 3520, 0)
+
+    val TILE_FEROX_BANK = Tile(3129,3636, 0)
+    val TILE_FEROX_BARRIER = Tile(3135,3617, 0)
+    val TILE_FEROX_RESTORE = Tile(3129, 3625, 0)
+    var AREA_FEROX_TELE = Area(Tile(3144, 3641), Tile(3155, 3626))
+    var AREA_FEROX = Area(Tile(3123, 3640), Tile(3143, 3617))
 
     val AREA_ABYSS = Area(Tile(3008, 4863), Tile(3070, 4804))
     val AREA_INNER_ABYSS = Area(
