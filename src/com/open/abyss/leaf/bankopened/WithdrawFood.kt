@@ -6,7 +6,7 @@ import com.open.abyss.helpers.SupplyHelper
 import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Leaf
 
-class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing supplies") {
+class WithdrawFood(script: Script) : Leaf<Script>(script, "Withdrawing food") {
     private val foodName: String get() = script.configuration.foodName
     private val healthRequired = lazy {
         (Combat.maxHealth() * (script.configuration.healthRestorePercent / 100.0)).toInt()

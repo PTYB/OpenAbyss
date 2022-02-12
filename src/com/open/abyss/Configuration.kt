@@ -12,11 +12,10 @@ data class Configuration(
     val useEnergyRestore: Boolean,
     val foodName: String
 ) {
-
-    // TODO Make this shit not ugly
-    var failedObstacle = false
-
     val healthRestorePercent = 83
     val energyRestore = 70
+
+    var useAxe = false
+    var usePickaxe = false
 
 }

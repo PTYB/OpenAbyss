@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe
 import com.open.abyss.branch.IsBankOpened
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
+import com.open.abyss.helpers.SystemMessageManager
 import com.open.abyss.models.RuneType
 import com.open.abyss.models.RunecraftingMethod
 import org.powbot.api.Notifications
@@ -11,6 +12,7 @@ import org.powbot.api.event.GameActionEvent
 import org.powbot.api.event.InventoryChangeEvent
 import org.powbot.api.event.MessageEvent
 import org.powbot.api.event.VarpbitChangedEvent
+import org.powbot.api.rt4.Equipment
 import org.powbot.api.rt4.Inventory
 import org.powbot.api.rt4.walking.model.Skill
 import org.powbot.api.script.OptionType
@@ -24,11 +26,12 @@ import org.powbot.api.script.tree.TreeScript
 import org.powbot.mobile.script.ScriptManager
 import org.powbot.mobile.service.ScriptUploader
 import java.util.*
+import java.util.logging.Logger
 
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.4",
+    version = "1.0.5",
     category = ScriptCategory.Runecrafting,
     author = "PTY",
     markdownFileName = "OpenAbyss.md"
@@ -70,6 +73,7 @@ import java.util.*
     ]
 )
 class Script : TreeScript() {
+    private val logger = Logger.getLogger(this.javaClass.name)
 
     override val rootComponent: TreeComponent<*> by lazy {
         IsBankOpened(this)
@@ -84,10 +88,9 @@ class Script : TreeScript() {
 
         // Varpbit doesnt update until its interacted locally, so assume full if it has essence
         if (Inventory.count(configuration.essenceName) > 0) {
-            PouchTracker.largePouchFull = true
-            PouchTracker.mediumPouchFull = true
-            PouchTracker.smallPouchFull = true
+            PouchTracker.supportedPouches.forEach { it.status = true }
         }
+        PouchTracker.updatePouchesToTrack()
     }
 
     /**
@@ -107,6 +110,22 @@ class Script : TreeScript() {
         }
 
         configuration = Configuration(essenceType, runeType.altarArea, runeType, method, restoreEnergy, food)
+        checkObstacleMethods()
+    }
+
+    /**
+     *  Checks the possible equipment to see what abyss methods are possible
+     */
+    private fun checkObstacleMethods() {
+        val equippedWeapon = Equipment.itemAt(Equipment.Slot.MAIN_HAND)
+
+        if (equippedWeapon.name().contains(" axe")) {
+            logger.info("Woodcutting enabled")
+            configuration.useAxe = true
+        } else if (equippedWeapon.name().contains(" pickaxe")){
+            logger.info("Mining enabled")
+            configuration.usePickaxe = true
+        }
     }
 
     private fun addPaint() {
@@ -134,15 +153,7 @@ class Script : TreeScript() {
         }
 
         PouchTracker.messageEvent(messageEvent)
-
-        // TODO Make this not in the script but somewhere else
-        val m = messageEvent.message.lowercase(Locale.getDefault())
-        if (m.contains("but fail to distract them enough") ||
-            m.contains("fail to break-up the rock.") ||
-            m.contains("not agile enough to get through the gap")
-        ) {
-            configuration.failedObstacle = true
-        }
+        SystemMessageManager.messageRecieved(messageEvent)
     }
 
     /**
@@ -180,5 +191,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "emulator-5564", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5565", true, false)
 }

@@ -9,7 +9,7 @@ import org.powbot.api.rt4.Movement
 import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Leaf
 
-class ConsumeEnergyItems(script: Script) : Leaf<Script>(script, "Consume supplies") {
+class ConsumeEnergyItems(script: Script) : Leaf<Script>(script, "Restoring run energy") {
     override fun execute() {
         val energyPotion = Inventory.stream().filter { SupplyHelper.isEnergyPotion(it.name()) }.toList()
 

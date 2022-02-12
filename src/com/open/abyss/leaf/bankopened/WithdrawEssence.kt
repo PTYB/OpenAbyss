@@ -11,7 +11,7 @@ import org.powbot.api.script.tree.Leaf
 import org.powbot.mobile.script.ScriptManager
 import java.util.logging.Logger
 
-class WithdrawEssence(script: Script) : Leaf<Script>(script, "Consume supplies") {
+class WithdrawEssence(script: Script) : Leaf<Script>(script, "Withdrawing essence") {
 
     private val logger = Logger.getLogger(this.javaClass.name)
     var itemsToKeep: Array<String> = arrayOf()
