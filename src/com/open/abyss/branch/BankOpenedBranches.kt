@@ -68,7 +68,7 @@ class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw run
 
 class ShouldWithdrawTablet(script: Script) : Branch<Script>(script, "Withdraw tablets") {
     override val successComponent: TreeComponent<Script> = WithdrawTablet(script)
-    override val failedComponent: TreeComponent<Script> = ShouldWithdrawRing(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawEquipRing(script)
 
     override fun validate(): Boolean {
         if (script.configuration.teleport != RunecraftingMethod.HouseTablets) {
@@ -78,15 +78,14 @@ class ShouldWithdrawTablet(script: Script) : Branch<Script>(script, "Withdraw ta
     }
 }
 
-class ShouldWithdrawRing(script: Script) : Branch<Script>(script, "Withdraw Ring of dueling?") {
-    override val successComponent: TreeComponent<Script> = WithdrawRing(script)
+class ShouldWithdrawEquipRing(script: Script) : Branch<Script>(script, "Withdraw & equip Ring of dueling?") {
+    override val successComponent: TreeComponent<Script> = WithdrawEquipRing(script)
     override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
 
     override fun validate(): Boolean {
         if (script.configuration.teleport != RunecraftingMethod.RingOfDueling) {
             return false
         }
-        val ring = Equipment.itemAt(Equipment.Slot.RING)
         return Equipment.stream().id(*Constants.ID_RING_OF_DUELING).first().name().isEmpty()
     }
 }
