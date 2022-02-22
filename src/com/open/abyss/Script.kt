@@ -57,7 +57,7 @@ import java.util.logging.Logger
             description = "Method you wish to runecraft with.",
             optionType = OptionType.STRING,
             defaultValue = "Chronicle",
-            allowedValues = arrayOf("Chronicle", "House", "HouseTablets")
+            allowedValues = arrayOf("Chronicle", "House", "HouseTablets", "RingOfDueling")
         ),
         ScriptConfiguration(
             name = "Food",
@@ -191,5 +191,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5565", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5645", true, false)
 }

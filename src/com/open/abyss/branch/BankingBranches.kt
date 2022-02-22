@@ -1,5 +1,6 @@
 package com.open.abyss.branch
 
+import com.open.abyss.Constants
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
@@ -30,10 +31,19 @@ class InAltar(script: Script) : Branch<Script>(script, "In altar") {
 
 class InHouse(script: Script) : Branch<Script>(script, "In house") {
     override val successComponent: TreeComponent<Script> = UseGlory(script)
-    override val failedComponent: TreeComponent<Script> = OpenBank(script)
+    override val failedComponent: TreeComponent<Script> = FeroxCheck(script)
 
     override fun validate(): Boolean {
         return House.inside()
+    }
+}
+
+class FeroxCheck(script: Script) : Branch<Script>(script, "Using Dueling ring banking?") {
+    override val successComponent: TreeComponent<Script> = FeroxRestore(script)
+    override val failedComponent: TreeComponent<Script> = OpenBank(script)
+
+    override fun validate(): Boolean {
+        return script.configuration.teleport == RunecraftingMethod.RingOfDueling && Prayer.prayerPoints() == 0
     }
 }
 
@@ -48,9 +58,18 @@ class ShouldChronicleTeleport(script: Script) : Branch<Script>(script, "Which te
 
 class ShouldRuneTeleport(script: Script) : Branch<Script>(script, "House teleport runes") {
     override val successComponent: TreeComponent<Script> = HouseTeleportRunes(script)
-    override val failedComponent: TreeComponent<Script> = HouseTeleportTablet(script)
+    override val failedComponent: TreeComponent<Script> = ShouldRingOfDuelingTeleport(script)
 
     override fun validate(): Boolean {
         return script.configuration.teleport == RunecraftingMethod.House
+    }
+}
+
+class ShouldRingOfDuelingTeleport(script: Script) : Branch<Script>(script, "Ring of Dueling") {
+    override val successComponent: TreeComponent<Script> = RingOfDuelingTeleport(script)
+    override val failedComponent: TreeComponent<Script> = HouseTeleportTablet(script)
+
+    override fun validate(): Boolean {
+        return script.configuration.teleport == RunecraftingMethod.RingOfDueling
     }
 }
