@@ -11,9 +11,11 @@ import org.powbot.api.script.tree.Leaf
 
 class LeaveFerox(script: Script) : Leaf<Script>(script, "Leave ferox, walk to mage") {
     override fun execute() {
-        Movement.step(TILE_FEROX_BARRIER)
-        val barrier = Objects.stream().name("Barrier").at(TILE_FEROX_BARRIER).first()
-        barrier.interact("Pass-Through")
-        Condition.wait { !Constants.AREA_FEROX.contains(Players.local())}
+        val barrier = Objects.stream().type(GameObject.Type.INTERACTIVE).name("Barrier").at(TILE_FEROX_BARRIER).first()
+        if (barrier.inViewport()) {
+            if (barrier.interact("Pass-Through")) {
+                Condition.wait { !Constants.AREA_FEROX.contains(Players.local()) }
+            }
+        } else { Movement.step(TILE_FEROX_BARRIER) }
     }
 }

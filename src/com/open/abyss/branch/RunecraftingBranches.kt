@@ -36,16 +36,15 @@ class InAbyss(script: Script) : Branch<Script>(script, "In abyss") {
         return Constants.AREA_ABYSS.contains(Players.local())
     }
 }
-class UsingFerox(script: Script) : Branch<Script>(script, "Using Ferox") {
-    override val successComponent: TreeComponent<Script> = WalkedFromFerox(script)
+
+class UsingFerox(script: Script) : Branch<Script>(script, "Using Ferox?") {
+    override val successComponent: TreeComponent<Script> = WalkingFromFerox(script)
     override val failedComponent: TreeComponent<Script> = PassedDitch(script)
 
     override fun validate(): Boolean {
         return script.configuration.teleport == RunecraftingMethod.RingOfDueling
     }
 }
-
-
 
 class PassedDitch(script: Script) : Branch<Script>(script, "Past ditch") {
     override val successComponent: TreeComponent<Script> = EnterAbyss(script)
@@ -56,7 +55,7 @@ class PassedDitch(script: Script) : Branch<Script>(script, "Past ditch") {
     }
 }
 
-class WalkedFromFerox(script: Script) : Branch<Script>(script, "Walk to mage") {
+class WalkingFromFerox(script: Script) : Branch<Script>(script, "Walk to mage") {
     override val successComponent: TreeComponent<Script> = LeaveFerox(script)
     override val failedComponent: TreeComponent<Script> = EnterAbyss(script)
 

@@ -191,5 +191,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5565", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5645", true, false)
 }

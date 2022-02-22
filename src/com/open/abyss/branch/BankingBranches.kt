@@ -38,7 +38,7 @@ class InHouse(script: Script) : Branch<Script>(script, "In house") {
     }
 }
 
-class FeroxCheck(script: Script) : Branch<Script>(script, "In Ferox") {
+class FeroxCheck(script: Script) : Branch<Script>(script, "Using Dueling ring banking?") {
     override val successComponent: TreeComponent<Script> = FeroxRestore(script)
     override val failedComponent: TreeComponent<Script> = OpenBank(script)
 
