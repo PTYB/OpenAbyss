@@ -86,7 +86,7 @@ class ShouldWithdrawEquipRing(script: Script) : Branch<Script>(script, "Withdraw
         if (script.configuration.teleport != RunecraftingMethod.RingOfDueling) {
             return false
         }
-        return Equipment.stream().id(*Constants.ID_RING_OF_DUELING).first().name().isEmpty()
+        return Equipment.stream().id(*Constants.ID_RING_OF_DUELING).first() == Item.Nil
     }
 }
 
