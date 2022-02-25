@@ -28,6 +28,7 @@ object Constants {
 
     val AREA_AIR_ALTAR = Area(Tile(2828, 4848), Tile(2858, 4817))
     val AREA_COSMIC_ALTAR = Area(Tile(2115, 4859), Tile(2171, 4809))
+    val AREA_DEATH_ALTAR = Area(Tile(2176, 4862, 0), Tile(2233, 4811, 0))
     val AREA_EARTH_ALTAR = Area(Tile(2626, 4859), Tile(2685, 4815))
     val AREA_FIRE_ALTAR = Area(Tile(2556, 4863), Tile(2618, 4807))
     val AREA_NATURE_ALTAR = Area(Tile(2387, 4854), Tile(2412, 4828))

@@ -50,7 +50,7 @@ import java.util.logging.Logger
             description = "Type of rune you wish to craft.",
             optionType = OptionType.STRING,
             defaultValue = "Air",
-            allowedValues = arrayOf("Air", "Cosmic", "Earth", "Fire", "Law", "Nature")
+            allowedValues = arrayOf("Air", "Cosmic", "Death", "Earth", "Fire", "Law", "Nature")
         ),
         ScriptConfiguration(
             name = "Method",
@@ -97,8 +97,8 @@ class Script : TreeScript() {
      *  This method extracts the configuration from the GUI which is presented via the class annotations.
      */
     private fun extractConfiguration() {
-        val runeType = RuneType.valueOf(getOption<String>("Rune"))
-        val method = RunecraftingMethod.valueOf(getOption<String>("Method"))
+        val runeType = RuneType.valueOf(getOption("Rune"))
+        val method = RunecraftingMethod.valueOf(getOption("Method"))
         val food = getOption<String>("Food")
         val restoreEnergy = getOption<Boolean>("Restore energy")
         val essenceType = getOption<String>("Essence")
@@ -122,7 +122,7 @@ class Script : TreeScript() {
         if (equippedWeapon.name().contains(" axe")) {
             logger.info("Woodcutting enabled")
             configuration.useAxe = true
-        } else if (equippedWeapon.name().contains(" pickaxe")){
+        } else if (equippedWeapon.name().contains(" pickaxe")) {
             logger.info("Mining enabled")
             configuration.usePickaxe = true
         }
