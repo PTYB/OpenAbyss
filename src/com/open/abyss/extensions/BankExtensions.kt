@@ -8,8 +8,8 @@ import java.util.logging.Logger
 private val logger = Logger.getLogger("BankExtensions")
 
 fun Bank.mustWithdrawItem(itemID: IntArray, itemCount: Int): Boolean {
-    return if (stream().id(*itemID).first().stack >= itemCount) {
-        val itemToWithdraw = stream().id(*itemID).first()
+    val itemToWithdraw = stream().id(*itemID).first()
+    return if (itemToWithdraw.stack >= itemCount) {
         withdraw(itemToWithdraw, itemCount)
     } else {
         Notifications.showNotification("Does not have $itemCount $itemID stopping script.")

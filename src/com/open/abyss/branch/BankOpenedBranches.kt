@@ -53,7 +53,7 @@ class ShouldWithdrawEnergyRestorationItems(script: Script) : Branch<Script>(scri
     }
 }
 
-class ShouldWithdrawEquipPneck(script: Script) : Branch<Script>(script, "Should withdraw energy restoration") {
+class ShouldWithdrawEquipPneck(script: Script) : Branch<Script>(script, "Should withdraw and equip Phoenix necklace") {
     override val successComponent: TreeComponent<Script> = WithdrawEquipPneck(script)
     override val failedComponent: TreeComponent<Script> = ShouldWithdrawRunes(script)
 

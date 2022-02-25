@@ -55,12 +55,14 @@ object PouchTracker {
         ) {
             return
         }
-
         when (inventoryChangeEvent.quantityChange) {
             3 -> supportedPouches[0].status = false
             6 -> supportedPouches[1].status = false
-            7, 9 -> supportedPouches[2].status = false // 7 = decayed
+            7 -> supportedPouches[2].status = false // 7 = decayed
             12 -> supportedPouches[3].status = false
+            9 -> if (inventoryChangeEvent.itemName == ITEM_GIANT_POUCH) {
+                supportedPouches[3].status = false
+            } else supportedPouches[2].status = false
         }
     }
 
