@@ -60,9 +60,10 @@ object PouchTracker {
             6 -> supportedPouches[1].status = false
             7 -> supportedPouches[2].status = false // 7 = decayed
             12 -> supportedPouches[3].status = false
-            9 -> if (inventoryChangeEvent.itemName == ITEM_GIANT_POUCH) {
+            9 -> if (lastPouch == ITEM_GIANT_POUCH) {
                 supportedPouches[3].status = false
-            } else supportedPouches[2].status = false
+            } else if (lastPouch == ITEM_LARGE_POUCH)
+                supportedPouches[2].status = false
         }
     }
 
