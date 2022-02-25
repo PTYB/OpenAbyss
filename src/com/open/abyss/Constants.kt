@@ -15,11 +15,13 @@ object Constants {
     const val ITEM_SMALL_POUCH = "Small pouch"
     const val ITEM_MEDIUM_POUCH = "Medium pouch"
     const val ITEM_LARGE_POUCH = "Large pouch"
+    const val ITEM_GIANT_POUCH = "Giant pouch"
     const val ITEM_RUNE_AIR = "Air rune"
     const val ITEM_RUNE_EARTH = "Earth rune"
     const val ITEM_RUNE_LAW = "Law rune"
     const val ITEM_HOUSE_TELEPORT = "Teleport to house"
     const val ITEM_RING_OF_DUELING = "Ring of dueling(8)"
+    const val ITEM_PHOENIX_NECKLACE = "Phoenix necklace"
 
     val ID_DECAYED_POUCHES = arrayOf(5511, 5513).toIntArray()
     val ID_RING_OF_DUELING = arrayOf(2552, 2554, 2556, 2558, 2560, 2562, 2564, 2566).toIntArray()

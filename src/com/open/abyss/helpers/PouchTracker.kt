@@ -1,6 +1,7 @@
 package com.open.abyss.helpers
 
 import com.open.abyss.Constants.ITEM_DAEYALT_ESSENCE
+import com.open.abyss.Constants.ITEM_GIANT_POUCH
 import com.open.abyss.Constants.ITEM_LARGE_POUCH
 import com.open.abyss.Constants.ITEM_MEDIUM_POUCH
 import com.open.abyss.Constants.ITEM_SMALL_POUCH
@@ -16,12 +17,13 @@ object PouchTracker {
         Pouch(ITEM_SMALL_POUCH, 0, false),
         Pouch(ITEM_MEDIUM_POUCH, 1, false),
         Pouch(ITEM_LARGE_POUCH, 2, false),
+        Pouch(ITEM_GIANT_POUCH, 3, false)
     )
 
     var pouchesToTrack: List<Pouch> = listOf()
 
     fun updatePouchesToTrack() {
-        val pouchNamesToTrap = Inventory.stream().name(ITEM_SMALL_POUCH, ITEM_MEDIUM_POUCH, ITEM_LARGE_POUCH)
+        val pouchNamesToTrap = Inventory.stream().name(ITEM_SMALL_POUCH, ITEM_MEDIUM_POUCH, ITEM_LARGE_POUCH, ITEM_GIANT_POUCH)
             .map { it.name() }
             .toList()
         pouchesToTrack = supportedPouches.stream().filter { pouchNamesToTrap.contains(it.itemName) }.toList()
@@ -40,6 +42,7 @@ object PouchTracker {
         supportedPouches[0].status = varpbitValue and 0x1 == 1
         supportedPouches[1].status = varpbitValue ushr 1 and 0x1 == 1
         supportedPouches[2].status = varpbitValue ushr 2 and 0x1 == 1
+        supportedPouches[3].status = varpbitValue ushr 3 and 0x1 == 1
     }
 
     fun hasPouchToFill(): Boolean {
@@ -57,6 +60,7 @@ object PouchTracker {
             3 -> supportedPouches[0].status = false
             6 -> supportedPouches[1].status = false
             7, 9 -> supportedPouches[2].status = false // 7 = decayed
+            12 -> supportedPouches[3].status = false
         }
     }
 
@@ -66,7 +70,7 @@ object PouchTracker {
 
     fun gameActionEvent(gameActionEvent: GameActionEvent) {
         when (gameActionEvent.name) {
-            ITEM_SMALL_POUCH, ITEM_MEDIUM_POUCH, ITEM_LARGE_POUCH -> {
+            ITEM_SMALL_POUCH, ITEM_MEDIUM_POUCH, ITEM_LARGE_POUCH, ITEM_GIANT_POUCH -> {
                 lastPouch = gameActionEvent.name
             }
         }
@@ -78,6 +82,7 @@ object PouchTracker {
                 ITEM_SMALL_POUCH -> supportedPouches[0].status = false
                 ITEM_MEDIUM_POUCH -> supportedPouches[1].status = false
                 ITEM_LARGE_POUCH -> supportedPouches[2].status = false
+                ITEM_GIANT_POUCH -> supportedPouches[3].status = false
             }
         }
     }
