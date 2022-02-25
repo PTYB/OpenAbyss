@@ -31,9 +31,9 @@ import java.util.logging.Logger
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.5",
+    version = "1.0.6",
     category = ScriptCategory.Runecrafting,
-    author = "PTY",
+    author = "PTY, Okazaki",
     markdownFileName = "OpenAbyss.md"
 )
 @ScriptConfiguration.List(
@@ -97,11 +97,11 @@ class Script : TreeScript() {
      *  This method extracts the configuration from the GUI which is presented via the class annotations.
      */
     private fun extractConfiguration() {
-        val runeType = RuneType.valueOf(getOption<String>("Rune")!!)
-        val method = RunecraftingMethod.valueOf(getOption<String>("Method")!!)
-        val food = getOption<String>("Food")!!
-        val restoreEnergy = getOption<Boolean>("Restore energy")!!
-        val essenceType = getOption<String>("Essence")!!
+        val runeType = RuneType.valueOf(getOption<String>("Rune"))
+        val method = RunecraftingMethod.valueOf(getOption<String>("Method"))
+        val food = getOption<String>("Food")
+        val restoreEnergy = getOption<Boolean>("Restore energy")
+        val essenceType = getOption<String>("Essence")
 
         if (food.isNullOrEmpty()) {
             Notifications.showNotification("Please enter food to eat.")
