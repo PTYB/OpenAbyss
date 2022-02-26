@@ -5,7 +5,8 @@ Open source script for Powbot that crafts runes through the abyss
 
 - Multiple methods of crafting
   - Chronicle
-  - House teleport (Runes)
+  - House teleport (Runes/Tablets)
+  - Ring of dueling / Ferox 
 - Runes supported
   - Air
   - Cosmic

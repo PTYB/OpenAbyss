@@ -10,10 +10,12 @@ data class Configuration(
     val runeType: RuneType,
     val teleport: RunecraftingMethod,
     val useEnergyRestore: Boolean,
-    val foodName: String
+    val foodName: String,
+    val usePNeck: Boolean
 ) {
     val healthRestorePercent = 83
     val energyRestore = 70
+
 
     var useAxe = false
     var usePickaxe = false

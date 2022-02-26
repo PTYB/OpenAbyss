@@ -70,6 +70,11 @@ import java.util.logging.Logger
             description = "Use energy potions to restore.",
             optionType = OptionType.BOOLEAN,
         ),
+        ScriptConfiguration(
+            name = "Phoenix necklace",
+            description = "Use Phoenix necklace?",
+            optionType = OptionType.BOOLEAN,
+        ),
     ]
 )
 class Script : TreeScript() {
@@ -102,6 +107,7 @@ class Script : TreeScript() {
         val food = getOption<String>("Food")
         val restoreEnergy = getOption<Boolean>("Restore energy")
         val essenceType = getOption<String>("Essence")
+        val usePNeck = getOption<Boolean>("Phoenix necklace")
 
         if (food.isNullOrEmpty()) {
             Notifications.showNotification("Please enter food to eat.")
@@ -109,7 +115,7 @@ class Script : TreeScript() {
             return
         }
 
-        configuration = Configuration(essenceType, runeType.altarArea, runeType, method, restoreEnergy, food)
+        configuration = Configuration(essenceType, runeType.altarArea, runeType, method, restoreEnergy, food, usePNeck)
         checkObstacleMethods()
     }
 

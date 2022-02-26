@@ -46,10 +46,19 @@ class HasEnergyRestorationItems(script: Script) : Branch<Script>(script, "Has en
 
 class ShouldWithdrawEnergyRestorationItems(script: Script) : Branch<Script>(script, "Should withdraw energy restoration") {
     override val successComponent: TreeComponent<Script> = WithdrawEnergyItems(script)
-    override val failedComponent: TreeComponent<Script> = ShouldWithdrawRunes(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawEquipPneck(script)
 
     override fun validate(): Boolean {
         return script.configuration.useEnergyRestore && Movement.energyLevel() < script.configuration.energyRestore
+    }
+}
+
+class ShouldWithdrawEquipPneck(script: Script) : Branch<Script>(script, "Should withdraw and equip Phoenix necklace") {
+    override val successComponent: TreeComponent<Script> = WithdrawEquipPneck(script)
+    override val failedComponent: TreeComponent<Script> = ShouldWithdrawRunes(script)
+
+    override fun validate(): Boolean {
+        return script.configuration.usePNeck && Equipment.itemAt(Equipment.Slot.NECK).name() != Constants.ITEM_PHOENIX_NECKLACE
     }
 }
 
