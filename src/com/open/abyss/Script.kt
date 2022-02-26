@@ -25,13 +25,12 @@ import org.powbot.api.script.tree.TreeComponent
 import org.powbot.api.script.tree.TreeScript
 import org.powbot.mobile.script.ScriptManager
 import org.powbot.mobile.service.ScriptUploader
-import java.util.*
 import java.util.logging.Logger
 
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.6",
+    version = "1.0.7",
     category = ScriptCategory.Runecrafting,
     author = "PTY, Okazaki",
     markdownFileName = "OpenAbyss.md"

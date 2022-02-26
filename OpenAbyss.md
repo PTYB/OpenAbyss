@@ -17,3 +17,5 @@ Crafts runes using the abyss.
 - Chronicle support
 - House teleport(Runes)
 - House teleport(Tablets)
+- Ring of dueling / Ferox
+- Phoenix necklace
