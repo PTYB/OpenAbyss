@@ -23,7 +23,7 @@ object Constants {
     const val ITEM_RING_OF_DUELING = "Ring of dueling(8)"
     const val ITEM_PHOENIX_NECKLACE = "Phoenix necklace"
 
-    val ID_DECAYED_POUCHES = arrayOf(5511, 5513).toIntArray()
+    val ID_DECAYED_POUCHES = arrayOf(5511, 5513, 5515).toIntArray()
     val ID_RING_OF_DUELING = arrayOf(2552, 2554, 2556, 2558, 2560, 2562, 2564, 2566).toIntArray()
 
     val TILE_ZAMORAK_MAGE = Tile(3106, 3558, 0)
