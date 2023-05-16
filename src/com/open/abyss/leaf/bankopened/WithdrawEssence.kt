@@ -22,7 +22,8 @@ class WithdrawEssence(script: Script) : Leaf<Script>(script, "Withdrawing essenc
             Constants.ITEM_SMALL_POUCH,
             Constants.ITEM_MEDIUM_POUCH,
             Constants.ITEM_LARGE_POUCH,
-            Constants.ITEM_GIANT_POUCH
+            Constants.ITEM_GIANT_POUCH,
+            Constants.ITEM_COLOSSAL_POUCH,
         )
         if (script.configuration.teleport == RunecraftingMethod.House) {
             items.addAll(arrayOf(Constants.ITEM_RUNE_AIR, Constants.ITEM_RUNE_EARTH, Constants.ITEM_RUNE_LAW))
@@ -42,7 +43,7 @@ class WithdrawEssence(script: Script) : Leaf<Script>(script, "Withdrawing essenc
                 ScriptManager.stop()
                 return
             }
-            Bank.withdraw(script.configuration.essenceName, 0)
+            Bank.withdraw(script.configuration.essenceName, Bank.Amount.ALL)
         }
     }
 }

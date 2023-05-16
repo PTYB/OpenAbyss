@@ -36,5 +36,4 @@ class UseGlory(script: Script) : Leaf<Script>(script, "Using glory") {
             Condition.wait({ !House.inside() }, 500, 16)
         }
     }
-
 }

@@ -15,7 +15,7 @@ class ConsumeEnergyItems(script: Script) : Leaf<Script>(script, "Restoring run e
 
         if (Movement.energyLevel() == 100) {
             energyPotion.forEach {
-                Bank.deposit(it.name(), 0)
+                Bank.deposit(it.name(), Bank.Amount.ALL)
             }
         } else if (energyPotion.isNotEmpty()) {
             energyPotion.forEach {

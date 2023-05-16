@@ -1,6 +1,5 @@
 package com.open.abyss.branch
 
-import com.open.abyss.Constants
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
@@ -11,6 +10,16 @@ import org.powbot.api.rt4.*
 import org.powbot.api.script.tree.Branch
 import org.powbot.api.script.tree.TreeComponent
 
+
+class ShouldLogout(script:Script) : Branch<Script>(script, "Should logout?") {
+    override val successComponent: TreeComponent<Script> = Logout(script)
+    override val failedComponent: TreeComponent<Script> = ShouldRunecraft(script)
+
+    override fun validate(): Boolean {
+        return script.logout
+    }
+
+}
 class ShouldRunecraft(script: Script) : Branch<Script>(script, "Checking essense") {
     override val successComponent: TreeComponent<Script> = InAltarWithEssense(script)
     override val failedComponent: TreeComponent<Script> = InAltar(script)

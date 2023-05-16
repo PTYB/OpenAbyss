@@ -16,7 +16,6 @@ data class Configuration(
     val healthRestorePercent = 83
     val energyRestore = 70
 
-
     var useAxe = false
     var usePickaxe = false
 

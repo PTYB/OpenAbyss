@@ -13,7 +13,7 @@ class EatFood(script: Script) : Leaf<Script>(script, "Eating food") {
         val food = Inventory.stream().name(script.configuration.foodName).toList()
 
         if (Combat.healthPercent() >= 100){
-            Bank.deposit(script.configuration.foodName, 0)
+            Bank.deposit(script.configuration.foodName, Bank.Amount.ALL)
         } else {
             food.forEach {
                 val action = if (it.actions().contains("Drink")) "Drink" else "Eat"

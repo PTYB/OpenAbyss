@@ -11,15 +11,10 @@ import org.powbot.api.script.tree.Leaf
 class EmptyPouches(script: Script) : Leaf<Script>(script, "Emptying pouches") {
 
     override fun execute() {
-        var pouchesWithEss = Inventory.stream().name(*PouchTracker.getPouchesToWithdraw()).toList()
+        val pouchesWithEss = Inventory.stream().name(*PouchTracker.getPouchesToWithdraw()).toList()
 
         if (!Inventory.opened()) {
             Inventory.open()
-        }
-
-        // When crafting you can't withdraw from pouch
-        if (Players.local().animation() != -1) {
-            Condition.wait { Players.local().animation() == -1 }
         }
 
         pouchesWithEss.forEach {

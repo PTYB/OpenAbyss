@@ -23,6 +23,8 @@ import org.powbot.api.script.paint.Paint
 import org.powbot.api.script.paint.PaintBuilder
 import org.powbot.api.script.tree.TreeComponent
 import org.powbot.api.script.tree.TreeScript
+import org.powbot.dax.api.DaxWalker
+import org.powbot.dax.teleports.Teleport
 import org.powbot.mobile.script.ScriptManager
 import org.powbot.mobile.service.ScriptUploader
 import java.util.logging.Logger
@@ -30,7 +32,7 @@ import java.util.logging.Logger
 @ScriptManifest(
     name = "Open Abyss",
     description = "Crafts rune using the abyss.",
-    version = "1.0.7",
+    version = "1.0.11",
     category = ScriptCategory.Runecrafting,
     author = "PTY, Okazaki",
     markdownFileName = "OpenAbyss.md"
@@ -49,7 +51,7 @@ import java.util.logging.Logger
             description = "Type of rune you wish to craft.",
             optionType = OptionType.STRING,
             defaultValue = "Air",
-            allowedValues = arrayOf("Air", "Cosmic", "Death", "Earth", "Fire", "Law", "Nature")
+            allowedValues = arrayOf("Air","Chaos", "Cosmic", "Death", "Earth", "Fire", "Law", "Nature", "Blood")
         ),
         ScriptConfiguration(
             name = "Method",
@@ -79,6 +81,8 @@ import java.util.logging.Logger
 class Script : TreeScript() {
     private val logger = Logger.getLogger(this.javaClass.name)
 
+    var logout = false
+
     override val rootComponent: TreeComponent<*> by lazy {
         IsBankOpened(this)
     }
@@ -86,6 +90,7 @@ class Script : TreeScript() {
     lateinit var configuration: Configuration
 
     override fun onStart() {
+        DaxWalker.blacklistTeleports(*Teleport.values())
         super.onStart()
         extractConfiguration()
         addPaint()
@@ -151,12 +156,15 @@ class Script : TreeScript() {
      *  @param messageEvent The message received form the game.
      */
     @Subscribe
-    open fun message(messageEvent: MessageEvent) {
+    fun message(messageEvent: MessageEvent) {
         // Ensure its a game message not a player trying to mess it up
         if (messageEvent.sender.isNotEmpty()) {
             return
         }
 
+        if (messageEvent.message.contains("Oh dear, you are dead")) {
+            logout = true
+        }
         PouchTracker.messageEvent(messageEvent)
         SystemMessageManager.messageRecieved(messageEvent)
     }
@@ -196,5 +204,5 @@ class Script : TreeScript() {
 }
 
 fun main(args: Array<String>) {
-    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5645", true, false)
+    ScriptUploader().uploadAndStart("Open Abyss", "", "127.0.0.1:5665", true, false)
 }

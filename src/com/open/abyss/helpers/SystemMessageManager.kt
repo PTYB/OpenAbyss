@@ -15,14 +15,14 @@ object SystemMessageManager {
         if (!messageEvent.sender.isNullOrEmpty() || listeners.isEmpty()) {
             return
         }
+        logger.info("Message: " + messageEvent.message)
 
         listeners.forEach { l ->
-            if (l.messages.any { it.contains(messageEvent.message) }) {
+            if (l.messages.any { messageEvent.message.contains(it) }) {
                 l.count = l.count - 1
             }
         }
         val currentTime = System.currentTimeMillis()
-        val startingCount = listeners.count()
         listeners.removeAll { it.count <= 0 || it.expireTime + it.time <= currentTime }
     }
 }

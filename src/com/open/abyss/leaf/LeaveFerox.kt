@@ -9,7 +9,7 @@ import org.powbot.api.rt4.*
 import org.powbot.api.rt4.walking.local.LocalPathFinder
 import org.powbot.api.script.tree.Leaf
 
-class LeaveFerox(script: Script) : Leaf<Script>(script, "Leave ferox, walk to mage") {
+class LeaveFerox(script: Script) : Leaf<Script>(script, "Leaving Ferox") {
     override fun execute() {
         val barrier = Objects.stream(TILE_FEROX_BARRIER, GameObject.Type.INTERACTIVE).first()
         if (barrier.inViewport() && barrier.interact("Pass-Through")) {

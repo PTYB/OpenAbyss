@@ -65,7 +65,7 @@ class EnterAbyssInner(script: Script) : Leaf<Script>(script, "Enter abyss inner"
             SystemMessageManager.addMessageToListen(message)
 
             if (nearestGameObject.interact(interaction)) {
-                if (Condition.wait { message.count == 0 || Players.local().animation() != -1 }) {
+                if (Condition.wait { message.count == 0 || (Players.local().animation() != -1 && Players.local().animation() != 1156)}) {
                     Condition.wait({ message.count == 0 || AREA_INNER_ABYSS.contains(Players.local()) }, 500, 16)
                 }
             } else {

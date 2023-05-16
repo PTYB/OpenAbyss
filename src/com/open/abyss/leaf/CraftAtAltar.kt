@@ -21,7 +21,7 @@ class CraftAtAltar(script: Script) : Leaf<Script>(script, "Crafting runes") {
 
         if (altar.interact("Craft-rune") && Condition.waitForExpGained(Constants.SKILLS_RUNECRAFTING)) {
             // Wait a bit for it to allow interactions
-            Condition.sleep(Random.nextInt(800, 900))
+            Condition.sleep(Random.nextInt(100, 200))
         }
     }
 

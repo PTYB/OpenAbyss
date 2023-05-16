@@ -7,7 +7,6 @@ import org.powbot.api.Condition
 import org.powbot.api.Notifications
 import org.powbot.api.rt4.Inventory
 import org.powbot.api.rt4.Item
-import org.powbot.api.rt4.Magic
 import org.powbot.api.rt4.Players
 import org.powbot.api.script.tree.Leaf
 import org.powbot.mobile.script.ScriptManager

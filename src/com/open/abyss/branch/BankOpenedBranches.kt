@@ -2,9 +2,11 @@ package com.open.abyss.branch
 
 import com.open.abyss.Constants
 import com.open.abyss.Constants.ITEM_HOUSE_TELEPORT
+import com.open.abyss.Constants.NAME_POUCHES
 import com.open.abyss.Script
 import com.open.abyss.helpers.PouchTracker
 import com.open.abyss.extensions.count
+import com.open.abyss.helpers.PouchTracker.pouchesToTrack
 import com.open.abyss.helpers.SupplyHelper
 import com.open.abyss.leaf.*
 import com.open.abyss.leaf.bankopened.*
@@ -70,8 +72,8 @@ class ShouldWithdrawRunes(script: Script) : Branch<Script>(script, "Withdraw run
         if (script.configuration.teleport != RunecraftingMethod.House) {
             return false
         }
-        return Inventory.count(com.open.abyss.Constants.ITEM_RUNE_LAW) == 0 || Inventory.count(com.open.abyss.Constants.ITEM_RUNE_AIR) == 0 ||
-                Inventory.count(com.open.abyss.Constants.ITEM_RUNE_EARTH) == 0
+        return Inventory.count(Constants.ITEM_RUNE_LAW) == 0 || Inventory.count(Constants.ITEM_RUNE_AIR) == 0 ||
+                Inventory.count(Constants.ITEM_RUNE_EARTH) == 0
     }
 }
 
@@ -89,13 +91,22 @@ class ShouldWithdrawTablet(script: Script) : Branch<Script>(script, "Withdraw ta
 
 class ShouldWithdrawEquipRing(script: Script) : Branch<Script>(script, "Withdraw & equip Ring of dueling?") {
     override val successComponent: TreeComponent<Script> = WithdrawEquipRing(script)
-    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+    override val failedComponent: TreeComponent<Script> = NeedsToWithdrawPouches(script)
 
     override fun validate(): Boolean {
         if (script.configuration.teleport != RunecraftingMethod.RingOfDueling) {
             return false
         }
         return Equipment.stream().id(*Constants.ID_RING_OF_DUELING).first() == Item.Nil
+    }
+}
+
+class NeedsToWithdrawPouches(script: Script) : Branch<Script>(script, "Needs to withdraw pouches") {
+    override val successComponent: TreeComponent<Script> = WithdrawPouches(script)
+    override val failedComponent: TreeComponent<Script> = NeedsToFillPouches(script)
+
+    override fun validate(): Boolean {
+        return Inventory.count(*NAME_POUCHES) != pouchesToTrack.size
     }
 }
 
